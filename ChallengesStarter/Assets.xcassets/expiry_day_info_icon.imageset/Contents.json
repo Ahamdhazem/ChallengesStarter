@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "expiry_day_info_icon.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

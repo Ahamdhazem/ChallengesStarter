@@ -1,0 +1,17 @@
+{
+  "statusCode": "success",
+  "sales_point_trx_id": "1f84ba2e-bd5e-4a6e-b93c-08dded23be99",
+  "message": "",
+  "data": {
+    "challenge_id": 17,
+    "state": "withdrawn",
+    "state_color": "#9CA3AF"
+  },
+  "error": {
+    "code": "",
+    "title": "",
+    "message": "",
+    "detail": "",
+    "extra_data": {}
+  }
+}

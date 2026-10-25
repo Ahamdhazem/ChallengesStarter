@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "black_check_icon.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

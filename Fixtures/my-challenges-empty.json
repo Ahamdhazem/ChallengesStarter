@@ -1,0 +1,14 @@
+{
+  "statusCode": "success",
+  "message": "",
+  "data": {
+    "challenges": []
+  },
+  "error": {
+    "code": "",
+    "title": "",
+    "message": "",
+    "detail": "",
+    "extra_data": {}
+  }
+}

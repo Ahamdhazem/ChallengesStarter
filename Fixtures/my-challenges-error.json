@@ -1,0 +1,12 @@
+{
+  "statusCode": "error",
+  "message": "Unable to load challenges",
+  "data": null,
+  "error": {
+    "code": "400",
+    "title": "Challenges unavailable",
+    "message": "Please try again.",
+    "detail": "",
+    "extra_data": {}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "check_icon_success500.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

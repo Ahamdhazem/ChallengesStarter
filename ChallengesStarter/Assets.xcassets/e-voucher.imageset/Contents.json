@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "e-voucher.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

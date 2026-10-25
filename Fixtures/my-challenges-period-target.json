@@ -1,0 +1,183 @@
+{
+  "statusCode": "success",
+  "message": "",
+  "data": {
+    "challenges": [
+      {
+        "id": 3,
+        "name": "Summer Activation Race",
+        "code": "TRAINING_PERIOD_TARGET",
+        "challenge_type": "period_target",
+        "state": "in_progress",
+        "state_color": "#FFAA00",
+        "date_start": "2026-08-01",
+        "date_end": "2026-08-10",
+        "progress_pct": 75,
+        "progress_value": 150,
+        "target_value": 200,
+        "remaining_value": 50,
+        "progress_title": "200 activations by Aug 10 to unlock reward 🔥",
+        "activity": "200 Prepaid Activation",
+        "days_to_expiry": 1,
+        "expiry_message": "1 day to expiry this challenge.",
+        "rewards": [
+          {
+            "id": 101,
+            "name": "Spin the Wheel",
+            "icon": "",
+            "reward_type": "spin_entitlement",
+            "state": "granted",
+            "can_claim": false,
+            "entitlement_id": 101,
+            "presentation": "wheel"
+          },
+          {
+            "id": 102,
+            "name": "300 Pts",
+            "icon": "",
+            "reward_type": "points",
+            "state": "granted",
+            "can_claim": false
+          },
+          {
+            "id": 103,
+            "name": "100 JOD Voucher",
+            "icon": "",
+            "reward_type": "gift",
+            "state": "granted",
+            "can_claim": false,
+            "grant_id": 103
+          },
+          {
+            "id": 104,
+            "name": "iPhone 13",
+            "icon": "",
+            "reward_type": "gift",
+            "state": "granted",
+            "can_claim": false,
+            "grant_id": 104
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Summer Activation Race",
+        "code": "TRAINING_PERIOD_TARGET",
+        "challenge_type": "period_target",
+        "state": "succeeded",
+        "state_color": "#16B364",
+        "date_start": "2026-08-01",
+        "date_end": "2026-08-10",
+        "progress_pct": 100,
+        "progress_value": 200,
+        "target_value": 200,
+        "remaining_value": 0,
+        "progress_title": "Goal Completed - reward unlocked 🎉",
+        "activity": "200 Prepaid Activation",
+        "days_to_expiry": null,
+        "expiry_message": "",
+        "rewards": [
+          {
+            "id": 101,
+            "name": "Spin the Wheel",
+            "icon": "",
+            "reward_type": "spin_entitlement",
+            "state": "granted",
+            "can_claim": true,
+            "entitlement_id": 101,
+            "presentation": "wheel"
+          },
+          {
+            "id": 102,
+            "name": "300 Pts",
+            "icon": "",
+            "reward_type": "points",
+            "state": "claimed",
+            "can_claim": false
+          },
+          {
+            "id": 103,
+            "name": "100 JOD Voucher",
+            "icon": "",
+            "reward_type": "gift",
+            "state": "granted",
+            "can_claim": true,
+            "grant_id": 103
+          },
+          {
+            "id": 104,
+            "name": "iPhone 13",
+            "icon": "",
+            "reward_type": "gift",
+            "state": "granted",
+            "can_claim": true,
+            "grant_id": 104
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Summer Activation Race",
+        "code": "TRAINING_PERIOD_TARGET",
+        "challenge_type": "period_target",
+        "state": "succeeded",
+        "state_color": "#16B364",
+        "date_start": "2026-08-01",
+        "date_end": "2026-08-10",
+        "progress_pct": 100,
+        "progress_value": 200,
+        "target_value": 200,
+        "remaining_value": 0,
+        "progress_title": "Goal Completed - reward unlocked 🎉",
+        "activity": "200 Prepaid Activation",
+        "days_to_expiry": null,
+        "expiry_message": "",
+        "rewards": [
+          {
+            "id": 101,
+            "name": "Spin the Wheel",
+            "icon": "",
+            "reward_type": "spin_entitlement",
+            "state": "used",
+            "can_claim": false,
+            "entitlement_id": 101,
+            "presentation": "wheel"
+          },
+          {
+            "id": 102,
+            "name": "300 Pts",
+            "icon": "",
+            "reward_type": "points",
+            "state": "claimed",
+            "can_claim": false
+          },
+          {
+            "id": 103,
+            "name": "100 JOD Voucher",
+            "icon": "",
+            "reward_type": "gift",
+            "state": "granted",
+            "can_claim": true,
+            "grant_id": 103
+          },
+          {
+            "id": 104,
+            "name": "iPhone 13",
+            "icon": "",
+            "reward_type": "gift",
+            "state": "granted",
+            "can_claim": true,
+            "grant_id": 104
+          }
+        ]
+      }
+    ]
+  },
+  "error": {
+    "code": "",
+    "title": "",
+    "message": "",
+    "detail": "",
+    "extra_data": {}
+  }
+}
