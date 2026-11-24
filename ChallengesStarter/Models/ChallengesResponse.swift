@@ -29,10 +29,10 @@ struct ChallengesResponse:Decodable{
             let state_color : String!
             let date_start : String!
             let date_end : String!
-            let progress_pct : Int!
-            let progress_value : Int!
-            let target_value : Int!
-            let remaining_value : Int!
+            let progress_pct : Double!
+            let progress_value : Double!
+            let target_value : Double!
+            let remaining_value : Double!
             let progress_title : String!
             let activity : String!
             let days_to_expiry : Int!
@@ -57,7 +57,7 @@ struct ChallengesResponse:Decodable{
         let title : String!
         let message : String!
         let detail :String!
-        let extra_data : [String:String]!
+        // extra_data values can be any JSON type; not needed for this task.
         
     }
 }

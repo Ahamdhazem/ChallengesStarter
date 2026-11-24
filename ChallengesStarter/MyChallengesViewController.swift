@@ -73,8 +73,8 @@ final class MyChallengesViewController: UIViewController {
         // Reference: README.md, Documentation/FieldMapping.md and the supplied Fixtures.
 
     
-        requestChallenges()
         tableViewConfiguer()
+        requestChallenges()
 
     }
     
@@ -85,7 +85,13 @@ final class MyChallengesViewController: UIViewController {
         tabelView.register(nib, forCellReuseIdentifier: "PeriodTargetChallengeCell")
         
         //            .asDriver(onErrorJustReturn: T##ChallengesResponse.Data.MayChallenge).drive(ta)
-        staticChalenges.bind(to: tabelView.rx.items(
+        // Bind the real GET result (was bound to the static sample), keeping only period_target.
+        challengesResponse
+            .map { response in
+                (response?.data?.challenges ?? [])
+                    .filter { $0.challenge_type == APIConfiguration.challengeType }
+            }
+            .bind(to: tabelView.rx.items(
             cellIdentifier: "PeriodTargetChallengeCell",
             cellType:PeriodTargetChallengeCell.self
         )){
@@ -108,11 +114,18 @@ final class MyChallengesViewController: UIViewController {
                 guard let self else { return }
 //                print("Success",authorization)
                 self.authorizationState.accept(.ready)
-                self.loadChallenges(authorization: authorization)?.subscribe(
-                    onSuccess: { [weak self] value in
-                        self?.challengesResponse.accept(value)
-                    }
-                )
+                self.loadChallenges(authorization: authorization)
+                    .observe(on: MainScheduler.instance)
+                    .subscribe(
+                        onSuccess: { [weak self] value in
+                            self?.challengesResponse.accept(value)
+                        },
+                        onFailure: { error in
+                            // TODO: show this to the user (error label / alert).
+                            print("[MyChallenges] Load failed:", error.localizedDescription)
+                        }
+                    )
+                    .disposed(by: self.disposeBag)
 
             }, onFailure: { [weak self] error in
                 self?.authorizationState.accept(.failed(error.localizedDescription))
@@ -121,51 +134,68 @@ final class MyChallengesViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func loadChallenges(authorization: String) -> Single<ChallengesResponse>?  {
-        // TODO: implement the GET here, after successful token acquisition.
-        // Set Authorization to authorization unchanged (already includes "Bearer ").
-        // Set api-key to APIConfiguration.apiKey. Never log either header.
-        print("loadChallenges is Called")
-        guard authorizationState.value != .loading else {
-            print("authorizationState is Loading")
-            return nil}
-        return Single.create{  observer  in
-            
-            let parameters: [String: String] = [
-                "challenge_type":"period_target"
-            ]
-            let headers:HTTPHeaders = [
+    private func loadChallenges(authorization: String) -> Single<ChallengesResponse> {
+        // Authorization is used unchanged (already includes "Bearer "). Never log either header.
+        Single.create { observer in
+            let parameters = ["challenge_type": APIConfiguration.challengeType]
+            let headers: HTTPHeaders = [
                 "api-key": APIConfiguration.apiKey,
                 "Authorization": authorization,
-//                "Authorization": authorization.flatMap{ header in return String(header) },
-                "accept" : "application/json" ,
-                "Accept-Language":"en",
-                "Content-Type": "application/json"
-               
+                "Accept": "application/json",
+                "Accept-Language": "en"
             ]
+
             let request = AF.request(
-                "https://devapi-salespoint.leading-point.org/api/Core/v3.0/gamification/MyChallenges",
-                parameters:parameters,
-                headers:headers
-            ).validate()
-                .responseDecodable(of:ChallengesResponse.self){
-                    [weak self] response in
-                    print("response")
-                    switch(response.result){
-                    case .success(let data) :
-                        print("response sucsses",data)
-                        self?.challengesResponse.accept(data)
-                        return observer(.success(data))
-                    case .failure(let error) :
-                        print("error")
-                        return observer(.failure(error))
-                    }
-                    
+                APIConfiguration.myChallengesURL,
+                method: .get,
+                parameters: parameters,
+                encoding: URLEncoding.queryString,
+                headers: headers
+            )
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: ChallengesResponse.self) { response in
+                #if DEBUG
+                // Debug output: URL, HTTP status and raw body only — no headers.
+                print("[MyChallenges] URL:", response.request?.url?.absoluteString ?? "nil")
+                print("[MyChallenges] HTTP:", response.response?.statusCode ?? -1)
+                if case .failure = response.result, let body = response.data {
+                    print("[MyChallenges] Body:", String(decoding: body, as: UTF8.self))
                 }
-            return Disposables.create {
-                request.cancel()
+                #endif
+
+                switch response.result {
+                case .success(let value):
+                    // HTTP 200 is not enough: the API envelope must also say success.
+                    guard value.statusCode == "success" else {
+                        let message = [value.error?.message, value.message, value.error?.title]
+                            .compactMap { $0 }
+                            .first { !$0.isEmpty } ?? "Unable to load challenges."
+                        observer(.failure(ChallengesError.api(message)))
+                        return
+                    }
+                    observer(.success(value))
+
+                case .failure(let error):
+                    #if DEBUG
+                    if case .responseSerializationFailed(.decodingFailed(let decodingError)) = error {
+                        // Names the exact field/type that failed to decode.
+                        print("[MyChallenges] Decoding error:", decodingError)
+                    } else {
+                        print("[MyChallenges] Error:", error)
+                    }
+                    #endif
+                    observer(.failure(error))
+                }
             }
-            
+
+            return Disposables.create { request.cancel() }
+        }
+    }
+
+    enum ChallengesError: LocalizedError {
+        case api(String)
+        var errorDescription: String? {
+            switch self { case .api(let message): return message }
         }
     }
     
